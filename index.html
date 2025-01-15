@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        body {
+       body {
             background-color: #267f2e; /* Green from your image */
             color: #ffffff;
         }
@@ -39,7 +39,7 @@
         }
 
         .card {
-            background-color: #1a3f1f; /* Black background for card */
+            background-color: #000000; /* Black background for card */
             color: #ffffff; /* White text */
         }
 
@@ -48,10 +48,63 @@
             color: #000000; /* Black text */
         }
 
+        .card .btn-custom:hover {
+            background-color: #e6c200;
+        }
+
+        .list-group-item {
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            border: 1px solid #ffd700; /* Gold border */
+        }
+
+        .schedule-container {
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .schedule-container .list-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-container .list-group {
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .list-group-item {
+                width: 100%;
+                text-align: center;
+            }
+
+            .calendar {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .calendar {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns for tablets */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .calendar {
+                grid-template-columns: repeat(7, 1fr); /* 7 columns for large screens */
+            }
+        }
+
+        .stream {
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: #1a3f1f;
+            margin-bottom: 2rem;
+        }
 
         .calendar {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
             gap: 1rem;
             background-color: #1a3f1f;
             padding: 1rem;
@@ -67,11 +120,11 @@
         }
 
         .calendar-day, .calendar-placeholder {
-            background-color: #267f2e;
+            background-color: #000000; /* Black background */
             border-radius: 8px;
             padding: 1rem;
             text-align: center;
-            color: #000000;            
+            color: #ffffff; /* White text */
         }
 
         .calendar-day .event {
@@ -106,32 +159,26 @@
             text-align: center;
             color: #ffffff;
         }
+
+        .live-stream-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-color: #1a3f1f;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .live-stream-section iframe {
+            width: 80%;
+            height: 450px;
+            border: none;
+        }
+
         .navbar-brand img {
-            height: 40px; /* Reduce size of the logo */
+            height: 40px; /* Smaller logo size */
             width: auto;
-        }
-
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                height: 30px; /* Further reduce size for mobile */
-            }
-        }
-        @media (max-width: 768px) {
-            .schedule-container .list-group {
-                flex-wrap: wrap;
-                align-items: center;
-            }
-        }
-        @media (min-width: 769px) {
-            .calendar {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns for tablets */
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .calendar {
-                grid-template-columns: repeat(7, 1fr); /* 7 columns for large screens */
-            }
         }
     </style>
 </head>

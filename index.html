@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,118 +8,82 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-       body {
-            background-color: #267f2e; /* Green from your image */
-            color: #ffffff;
+        /* Base colors */
+        body { background-color: #267f2e; color: #ffffff; }
+
+        /* Shimmer keyframes */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        .navbar {
-            background-color: #1a531f;
+        /* Zoom and Animated utility */
+        .animated { transition: transform 0.3s ease-in-out; }
+        .animated:hover { transform: scale(1.05); }
+
+        /* Shimmer overlay for containers and buttons */
+        .shimmer-container, .btn-custom.shimmer { position: relative; overflow: hidden; }
+        .shimmer-container::after, .btn-custom.shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: translateX(-100%);
+            animation: shimmer 1.5s infinite;
+            pointer-events: none;
         }
 
-        .hero-section {
-            background-color: #000000;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero-section h1 {
-            font-family: 'Press Start 2P', cursive;
-            color: #ffd700; /* Gold/Yellow from your image */
-            color: #000
-        }
-
-        .playlists, .schedule {
-            padding: 2rem;
-            border-radius: 10px;
-            background-color: #000000; /* Black background */
-            color: #ffffff; /* White text */
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background-color: #000000; /* Black background for card */
-            color: #ffffff; /* White text */
-        }
-
-        .card .btn-custom {
-            background-color: #ffd700; /* Gold button */
-            color: #000000; /* Black text */
-        }
-
-        .card .btn-custom:hover {
-            background-color: #e6c200;
-        }
-
-        .list-group-item {
-            background-color: #000000; /* Black background */
-            color: #ffffff; /* White text */
-            border: 1px solid #ffd700; /* Gold border */
-        }
-
-        .schedule-container {
-            overflow-x: auto;
-            padding-bottom: 1rem;
-        }
-
-        .calendar {
-            display: grid;
-            gap: 1rem;
-            background-color: #1a3f1f;
-            padding: 1rem;
-            border-radius: 10px;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        }
-
-        .calendar-header {
-            grid-column: span 7;
-            text-align: center;
-            font-size: 1.5rem;
-            color: #ffd700;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-day, .calendar-placeholder {
-            background-color: #000000; /* Black background */
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            color: #ffffff; /* White text */
-        }
-
-        .calendar-day .event {
-            margin-top: 0.5rem;
-            background-color: #ffd700;
-            color: #000;
-            padding: 0.3rem;
-            border-radius: 5px;
-        }
-
+        /* Buttons */
         .btn-custom {
             background-color: #ffd700;
-            color: #000;
+            color: #000000;
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
+        .btn-custom:hover { background-color: #e6c200; }
 
-        .btn-custom:hover {
-            background-color: #e6c200;
+        /* Navbar */
+        .navbar { background-color: #1a531f; }
+        .navbar-nav { margin: 0 auto; }
+        .nav-link {
+            color: #ffffff !important;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease-in-out;
         }
-
-        .animated {
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            left: 50%;
+            bottom: 0;
             transition: all 0.3s ease-in-out;
         }
+        .nav-link:hover { color: #ffd700 !important; }
+        .nav-link:hover::after { left: 0; width: 100%; }
 
-        .animated:hover {
-            transform: scale(1.05);
+        /* Hero Section */
+        .hero-section { background-color: #000000; padding: 4rem 2rem; text-align: center; }
+        .hero-section h1 { font-family: 'Press Start 2P', cursive; color: #ffd700; display: inline-block; }
+
+        /* Sections */
+        .playlists, .schedule { padding: 2rem; border-radius: 10px; background-color: #000000; color: #ffffff; margin-bottom: 2rem; }
+
+        /* Cards */
+        .card { background-color: #000000; color: #ffffff; border: none; }
+        .shimmer-container .card-img-top {
+            border-radius: 8px;
+            display: block;
+            width: 100%;
         }
 
-        footer {
-            background-color: #1a531f;
-            padding: 1rem 0;
-            text-align: center;
-            color: #ffffff;
-        }
-
+        /* Live stream section */
         .live-stream-section {
             display: flex;
             justify-content: center;
@@ -131,47 +93,27 @@
             border-radius: 10px;
             margin-top: 2rem;
         }
+        .live-stream-section iframe { width: 80%; height: 450px; border: none; }
 
-        .live-stream-section iframe {
-            width: 80%;
-            height: 450px;
-            border: none;
-        }
-
-        .navbar-brand img {
-            height: 40px; /* Smaller logo size */
-            width: auto;
-        }
+        /* Footer */
+        footer { background-color: #1a531f; padding: 1rem 0; text-align: center; color: #ffffff; }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="img/logo-template-for-gamers-featuring-a-zelda-inspired-pixel-art-icon-2951k (2).png" alt="Logo">
-            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#playlists">Playlists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#schedule">Stream Schedule</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#stream">Stream Calendar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#stream">Watch Live</a>
-                    </li>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#playlists">Playlists</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stream">Stream Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#live-stream">Watch Live</a></li>
                 </ul>
             </div>
         </div>
@@ -180,40 +122,46 @@
     <section class="hero-section">
         <h1>Welcome to theblindswordsmanDS!</h1>
         <p class="lead">Catch live streams, latest playlists, and more!</p>
-        <a href="#stream" class="btn btn-custom">Watch Live</a>
+        <a href="#live-stream" class="btn btn-custom shimmer animated">Watch Live</a>
     </section>
 
     <div class="container mt-5">
-        <section id="playlists" class="playlists animated">
+        <section id="playlists" class="playlists">
             <h2>Most Recent Playlists</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="img/1p.png" class="card-img-top" alt="...">
+                    <div class="card animated">
+                        <div class="shimmer-container">
+                            <img src="img/1p.png" class="card-img-top animated" alt="Persona 5: Royal">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">Persona 5: Royal</h5>
                             <p class="card-text">Let's Play #132 Persona 5: Royal</p>
-                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK-FnUtXSgsqhgGy8T2V3Gjy" class="btn btn-custom">View Playlist</a>
+                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK-FnUtXSgsqhgGy8T2V3Gjy" class="btn btn-custom shimmer animated">View Playlist</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="img/maxresdefault (3).jpg" class="card-img-top" alt="...">
+                    <div class="card animated">
+                        <div class="shimmer-container">
+                            <img src="img/maxresdefault (3).jpg" class="card-img-top animated" alt="Mario Party 3">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">Mario Party 3</h5>
                             <p class="card-text">Let's Play #133 Mario Party 3</p>
-                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK_gYfWcuLkyOPg3gkbPEz53" class="btn btn-custom">View Playlist</a>
+                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK_gYfWcuLkyOPg3gkbPEz53" class="btn btn-custom shimmer animated">View Playlist</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="img/1.png" class="card-img-top" alt="...">
+                    <div class="card animated">
+                        <div class="shimmer-container">
+                            <img src="img/1.png" class="card-img-top animated" alt="Mega Man X4">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">Mega Man X4</h5>
                             <p class="card-text">Let's Play #134 Mega Man X4</p>
-                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK_8JpVTN0izu6a5SYlWDEcx" class="btn btn-custom">View Playlist</a>
+                            <a href="https://www.youtube.com/playlist?list=PLSSoUE_YxXK_8JpVTN0izu6a5SYlWDEcx" class="btn btn-custom shimmer animated">View Playlist</a>
                         </div>
                     </div>
                 </div>
@@ -221,74 +169,24 @@
         </section>
 
         <section id="schedule" class="schedule animated">
-            <h2>Stream Schedule *coming soon*</h2>
-            <!-- <p>Stay tuned for upcoming live streams! 3 hours a stream and Here is the current schedule:</p>
-            <ul class="list-group">
-                <li class="list-group-item">*Monday - 7 AM (MST)</li>
-                <li class="list-group-item">*Wednesday - 7 AM (MST)</li>
-                <li class="list-group-item">*Friday - 7 AM (MST)</li>
-            </ul>
-            <p>*Pending if there are issues and if there is no holiday</p>
-        </section>-->
-        
-        <section id="stream" class="stream animated">
-            <h2>Stream & Upload Calendar *coming soon*</h2>
-            <!--<div class="calendar">
-                <div class="calendar-day">
-                    <strong>Monday</strong>
-                    <div class="event">7 AM MST - Live Stream</div>
-                    <div class="event">3 PM MST - Marvels Spider-Man Part 6</div>
-                    <div class="event">3:30 PM MST - Short 15</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Tuesday</strong>
-                    <div class="event">3 PM MST - Rugrats(PS1) Part 2</div>
-                    <div class="event">3:30 PM MST - Short 16</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Wednesday</strong>
-                    <div class="event">7 AM MST - Live Stream</div>
-                    <div class="event">3 PM MST - Marvels Spider-Man Part 7</div>
-                    <div class="event">3:30 PM MST - Short 17</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Thursday</strong>
-                    <div class="event">3 PM MST - Spider-Man(PS1) Part 2</div>
-                    <div class="event">3:30 PM MST - Short 18</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Friday</strong>
-                    <div class="event">7 AM MST - Live Stream</div>
-                    <div class="event">3 PM MST - Marvels Spider-Man Part 8</div>
-                    <div class="event">3:30 PM MST - Short 19</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Saturday</strong>
-                    <div class="event">3 PM MST - Marvels Spider-Man Part 9</div>
-                    <div class="event">3:30 PM MST - Short 20</div>
-                </div>
-                <div class="calendar-day">
-                    <strong>Sunday</strong>
-                    <div class="event">3 PM MST - Marvels Spider-Man Part 10</div>
-                    <div class="event">3:30 PM MST - Short 21</div>
-                </div>
-            </div>
-        </section>-->
-    
-    <div class="container mt-5">
-    <section id="live-stream" class="schedule animated">
-        <h2>Live Stream</h2>
-        <iframe style="margin: 0;" src="https://www.youtube.com/embed/live_stream?channel=UCNWLpEnXHJiL-Czn8hpfJpQ" allowfullscreen></iframe>
-    </section>
-</div>
+            <h2>Stream Schedule <small>(coming soon)</small></h2>
+        </section>
 
+        <section id="stream" class="schedule animated">
+            <h2>Stream & Upload Calendar <small>(coming soon)</small></h2>
+        </section>
 
-    <footer>
+        <section id="live-stream" class="live-stream-section animated">
+            <iframe src="https://www.youtube.com/embed/live_stream?channel=UCNWLpEnXHJiL-Czn8hpfJpQ" allowfullscreen></iframe>
+        </section>
+    </div>
+
+    <footer class="animated">
         <p>&copy; 2025 theblindswordsmanDS. All rights reserved.</p>
         <div>
-            <a href="https://x.com/blindswo" class="me-2 text-white"><i class="fab fa-twitter"></i></a>
-            <a href="https://youtube.com/theblindswordsmanDS" class="me-2 text-white"><i class="fab fa-youtube"></i></a>
-            <a href="https://discord.gg/DJ39bRMr" class="text-white"><i class="fab fa-discord"></i></a>
+            <a href="https://x.com/blindswo" class="me-2 text-white animated"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/theblindswordsmanDS" class="me-2 text-white animated"><i class="fab fa-youtube"></i></a>
+            <a href="https://discord.gg/DJ39bRMr" class="text-white animated"><i class="fab fa-discord"></i></a>
         </div>
     </footer>
 
